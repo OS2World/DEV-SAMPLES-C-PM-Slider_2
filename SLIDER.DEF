@@ -1,0 +1,12 @@
+;-------------------------
+;
+; SLIDER.DEF
+;
+;-------------------------
+
+
+NAME    SLIDER WINDOWAPI
+
+EXPORTS ClientWinProc
+
+

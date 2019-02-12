@@ -1,0 +1,20 @@
+/***************************
+*
+* SLIDER.RC
+*
+****************************/
+
+#include <os2.h>
+#include "slider.h"
+
+MENU ID_FRAMERC
+   BEGIN
+     SUBMENU "~Slider", ID_SLIDER_SUBMENU
+        BEGIN
+            MENUITEM "Create Hor. Slider", ID_HSLIDER
+            MENUITEM "Create Ver. Slider", ID_VSLIDER
+            MENUITEM "Close  Hor. Slider", ID_STOP,,  MIA_DISABLED
+        END
+     MENUITEM "E~xit" , ID_EXIT
+   END
+

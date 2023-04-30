@@ -6,7 +6,7 @@
 
 INT main (void);
 
-#pragma linkage (ClientWinProc, system)
+// #pragma linkage (ClientWinProc, system) //Seems to be for IBM compiler
 MRESULT ClientWinProc (HWND, USHORT, MPARAM, MPARAM);
 
 
@@ -18,4 +18,3 @@ MRESULT ClientWinProc (HWND, USHORT, MPARAM, MPARAM);
 #define ID_VSLIDER 102
 #define ID_STOP    103
 #define ID_EXIT    110
-

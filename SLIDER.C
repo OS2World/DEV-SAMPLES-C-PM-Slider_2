@@ -28,14 +28,14 @@
 #include <process.h>
 #include "slider.h"
 
-main (void)
+int main (void)
 {
    HAB      hab;
    HMQ      hmq;
    QMSG     qmsg;
    HWND     hwndParent;
    HWND     hwndClient;
-   HWND     hwndSlider;
+//   HWND     hwndSlider;
 
    static CHAR szClientClass [] = "Client Window";
 
@@ -62,20 +62,20 @@ main (void)
    hwndParent = WinCreateStdWindow (HWND_DESKTOP
                                    ,WS_VISIBLE
                                    ,&flCreateFlags
-                                   ,szClientClass
-                                   ,""
+                                   ,(PCSZ) szClientClass
+                                   ,(PCSZ) ""
                                    ,0L
                                    ,0
                                    ,ID_FRAMERC
                                    ,&hwndClient
                                    );
 
-   while (WinGetMsg (hab, &qmsg, NULL, 0, 0) )
+   while (WinGetMsg (hab, &qmsg, 0, 0, 0) )
    {
       WinDispatchMsg (hab, &qmsg);
    } /* endwhile */
 
-   WinDestroyWindow (hwndSlider);
+//   WinDestroyWindow (hwndSlider);
    WinDestroyWindow (hwndParent);
    WinDestroyMsgQueue (hmq);
    WinTerminate (hab);
@@ -108,7 +108,7 @@ MRESULT ClientWinProc (HWND hwnd, USHORT msg, MPARAM mp1, MPARAM mp2)
    #define TICK  10
    #define SPACE 10
 
-   BOOL       rc;
+   //BOOL       rc;					//Not Used
    USHORT     usIndex;
    SHORT      usArrows;                // Fudge Factor
    ENTRYFDATA entryfdata;
@@ -118,7 +118,7 @@ MRESULT ClientWinProc (HWND hwnd, USHORT msg, MPARAM mp1, MPARAM mp2)
    CHAR       *cData;
    static     SLDCDATA   sldcdata;     // slider control data structure
    static     WNDPARAMS  wndparams;    // slider window parameters structure
-   static     PARAM      param;        // slider presentation data structure
+//   static     PARAM      param;        // slider presentation data structure
    static     HWND       hwndSlider;   // handle to slider window
    static     HWND       hwndDisplay;  // handle to entryfield window
    static     HWND       hwndMenu;
@@ -127,7 +127,7 @@ MRESULT ClientWinProc (HWND hwnd, USHORT msg, MPARAM mp1, MPARAM mp2)
    static     SHORT      SliderWindowCx;
    static     SHORT      NewShaftCx;
    static     SHORT      PixelsBetweenTicks;
-   static     ULONG      ulArmPosition;
+//   static     ULONG      ulArmPosition;
    static     ULONG      color = CLR_RED;
 
    ULONG SliderCreateFlags = SLS_HORIZONTAL
@@ -166,7 +166,7 @@ MRESULT ClientWinProc (HWND hwnd, USHORT msg, MPARAM mp1, MPARAM mp2)
                sldcdata.usScale2Spacing    = SPACE; // pels between increments
                hwndSlider = WinCreateWindow (hwnd               // parent window
                                             ,WC_SLIDER          // Class
-                                            ,""                 // window text
+                                            ,(PCSZ) ""          // window text
                                             ,SliderCreateFlags  // create style
                                             ,0                  // x = position
                                             ,35                 // y = position
@@ -208,8 +208,8 @@ MRESULT ClientWinProc (HWND hwnd, USHORT msg, MPARAM mp1, MPARAM mp2)
                entryfdata.ichMaxSel    = 256                ;
                hwndDisplay = WinCreateWindow (hwnd
                                              ,WC_ENTRYFIELD
-                                             ,"Arm Position"
-                                             ,EntryFieldCreateFlags
+                                             ,(PCSZ) "Arm Position"
+                                             ,(long) EntryFieldCreateFlags
                                              ,100
                                              ,160
                                              ,85
@@ -275,8 +275,8 @@ MRESULT ClientWinProc (HWND hwnd, USHORT msg, MPARAM mp1, MPARAM mp2)
                 **/
                WinMessageBox (HWND_DESKTOP
                              ,hwnd
-                             ,"Vertical slider not implemented."
-                             ,"Information"
+                             ,(PCSZ) "Vertical slider not implemented."
+                             ,(PCSZ) "Information"
                              ,WINDOW_ID + 2
                              ,MB_CANCEL
                              );
@@ -316,13 +316,14 @@ MRESULT ClientWinProc (HWND hwnd, USHORT msg, MPARAM mp1, MPARAM mp2)
           *
           * Save current slider arm position
           *
-          **/
+
           ulArmPosition =(LONG) WinSendMsg (hwndSlider
                                            ,SLM_QUERYSLIDERINFO
                                            ,MPFROM2SHORT (SMA_SLIDERARMPOSITION
                                            ,SMA_INCREMENTVALUE)
                                            ,NULL
                                            );
+		  **/
          /**
           *
           * Calulates the new (Cx) size of SliderWindow and ShaftWindow
@@ -382,12 +383,13 @@ MRESULT ClientWinProc (HWND hwnd, USHORT msg, MPARAM mp1, MPARAM mp2)
           * Restore slider arm position
           *
           **/
+		  /**
           rc = (BOOL) WinSendMsg (hwndSlider
                                  ,SLM_SETSLIDERINFO
                                  ,MPFROM2SHORT (SMA_SLIDERARMPOSITION, SMA_INCREMENTVALUE)
                                  ,MPFROMSHORT ((USHORT) ulArmPosition)
                                  );
-
+		  **/
          // This call allow the general positioning of editfield window
          WinSetWindowPos (hwndDisplay
                          ,HWND_TOP
@@ -438,4 +440,3 @@ MRESULT ClientWinProc (HWND hwnd, USHORT msg, MPARAM mp1, MPARAM mp2)
    return (MRESULT) TRUE;
 
 } /* end of ClientWinProc */
-

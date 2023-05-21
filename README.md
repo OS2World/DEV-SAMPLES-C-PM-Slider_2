@@ -1,6 +1,8 @@
 # DEV-SAMPLE-PM-Slider_2
 OS/2 Slider control example.
 
+![Slider 2 ScreenShot](/wiki/Slider2_002.png)
+
 ## LICENSE
 * BSD 3-Clauses
 
